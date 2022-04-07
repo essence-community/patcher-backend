@@ -25,7 +25,8 @@ class MPostgres : MDB {
             "    ck_user,\n" +
             "    ct_change\n" +
             "from\n" +
-            "    s_mt.t_attr_type\n"
+            "    s_mt.t_attr_type\n" +
+            "order by ck_id asc\n"
     override val sqlMAttrDataType = "select\n" +
             "    ck_id,\n" +
             "    cv_description,\n" +
@@ -33,7 +34,8 @@ class MPostgres : MDB {
             "    ck_user,\n" +
             "    ct_change\n" +
             "from\n" +
-            "    s_mt.t_d_attr_data_type\n"
+            "    s_mt.t_d_attr_data_type\n" +
+            "order by ck_id asc\n"
     override val sqlMClass: String = "select\n" +
             "    ck_id,\n" +
             "    cv_name,\n" +
@@ -72,7 +74,7 @@ class MPostgres : MDB {
             "from\n" +
             "    s_mt.t_class_hierarchy\n" +
             "where true <FILTER>\n" +
-            "order by ct_change asc, ck_id asc\n"
+            "order by ck_class_parent asc, ck_class_child asc\n"
     override val sqlMProvider: String = "select\n" +
             "    ck_id,\n" +
             "    cv_name,\n" +
@@ -181,7 +183,7 @@ class MPostgres : MDB {
             "  on ob.ck_id = attr.ck_object\n" +
             "join s_mt.t_class_attr ca\n" +
             "  on ca.ck_id = attr.ck_class_attr\n" +
-            "order by ob.lvl asc, ob.cn_order asc, ob.cv_name asc, attr.ct_change asc \n"
+            "order by ob.lvl asc, ob.cn_order asc, ca.ck_id asc \n"
     override val sqlMView: String = "select\n" +
             "    ck_id,\n" +
             "    cv_description,\n" +
@@ -191,7 +193,8 @@ class MPostgres : MDB {
             "    ck_user,\n" +
             "    ct_change\n" +
             "from\n" +
-            "    s_mt.t_view where 1=1 <FILTER>\n"
+            "    s_mt.t_view where 1=1 <FILTER>\n" +
+            "order by a.ck_id asc\n"
     override val sqlMPage: String = "with recursive page as (\n" +
             "select\n" +
             "    ck_id,\n" +
@@ -365,7 +368,7 @@ class MPostgres : MDB {
             "from\n" +
             "    s_mt.t_page_variable vp\n" +
             "  where vp.ck_page = :ckPage\n" +
-            "order by vp.cv_name asc, vp.ct_change asc\n"
+            "order by vp.cv_name asc\n"
     override val sqlMPageAction: String =
             "select\n" +
             "    ap.ck_id,\n" +
@@ -406,7 +409,7 @@ class MPostgres : MDB {
             "from\n" +
             "    s_mt.t_localization\n" +
             " where cr_namespace = 'message'\n" +
-            " order by ck_d_lang asc, ct_change asc, ck_id asc\n"
+            " order by ck_d_lang asc, ck_id asc\n"
     override val sqlModule: String = "select\n" +
             "    ck_id,\n" +
             "    cv_name,\n" +
@@ -657,7 +660,6 @@ class MPostgres : MDB {
             "    and p.ck_id = :ckPage\n" +
             "order by\n" +
             "    l.ck_d_lang asc,\n" +
-            "    l.ct_change asc,\n" +
             "    l.ck_id asc\n"
     override val sqlAccount =
             "select\n" +

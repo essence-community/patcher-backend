@@ -133,6 +133,40 @@ fun sortXmlLocalization(dir: String) {
 	marshaller.marshal(changeLog, queryXml);
 }
 
+fun sortXmlClasses(dir: String) {
+	var marshaller = createMarshaller();
+	var changeLog = DatabaseChangeLog();
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(Files.walk(Paths.get(dir))
+		.filter { file -> file.getFileName().toString().toLowerCase().endsWith(".sql") }
+		.sorted { o1, o2 -> o1.getFileName().compareTo(o2.getFileName()) }
+		.map { file ->
+			var inc = Include();
+			inc.setFile(file.getFileName().toString());
+			inc.setRelativeToChangelogFile("true");
+			inc
+		}
+		.collect(Collectors.toList()));
+	var queryXml = FileOutputStream("${dir}/classes.xml");
+	marshaller.marshal(changeLog, queryXml);
+}
+
+fun sortXmlClassesHierarchy(dir: String) {
+	var marshaller = createMarshaller();
+	var changeLog = DatabaseChangeLog();
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(Files.walk(Paths.get(dir))
+		.filter { file -> file.getFileName().toString().toLowerCase().endsWith(".sql") }
+		.sorted { o1, o2 -> o1.getFileName().compareTo(o2.getFileName()) }
+		.map { file ->
+			var inc = Include();
+			inc.setFile(file.getFileName().toString());
+			inc.setRelativeToChangelogFile("true");
+			inc
+		}
+		.collect(Collectors.toList()));
+	var queryXml = FileOutputStream("${dir}/classes_hierarchy.xml");
+	marshaller.marshal(changeLog, queryXml);
+}
+
 fun sortMeta(dir: String, name: String): Boolean {
 	var marshaller = createMarshaller();
 	var changeLog = DatabaseChangeLog();
@@ -151,6 +185,41 @@ fun sortMeta(dir: String, name: String): Boolean {
 		.collect(Collectors.toList())
 	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
 		files.stream()
+			.filter { file -> file.getFileName().toString().toLowerCase() == "classes.sql" }
+			.map { file ->
+				var inc = Include();
+				inc.setFile(file.toString().replace("\\","/"));
+				inc.setRelativeToChangelogFile("true");
+				inc
+			}
+			.collect(Collectors.toList())
+	);
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
+		files.stream()
+			.filter { file -> file.getFileName().toString().toLowerCase().endsWith("classes.xml") ||
+			 file.getFileName().toString().toLowerCase().endsWith("classes_hierarchy.xml")}
+			.map { file ->
+				var inc = Include();
+				inc.setFile(file.toString().replace("\\","/"));
+				inc.setRelativeToChangelogFile("true");
+				inc
+			}
+			.collect(Collectors.toList())
+	);
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
+		files.stream()
+			.filter { file -> file.getFileName().toString().toLowerCase().startsWith("classes_") && 
+			file.getFileName().toString().toLowerCase().endsWith(".sql")}
+			.map { file ->
+				var inc = Include();
+				inc.setFile(file.toString().replace("\\","/"));
+				inc.setRelativeToChangelogFile("true");
+				inc
+			}
+			.collect(Collectors.toList())
+	);
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
+		files.stream()
 			.filter { file -> file.getFileName().toString().toLowerCase().startsWith("view_")}
 			.map { file ->
 				var inc = Include();
@@ -163,9 +232,12 @@ fun sortMeta(dir: String, name: String): Boolean {
 	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
 		files.stream()
 			.filter { file -> file.getFileName().toString().toLowerCase() != "page.xml" &&
+					!file.getFileName().toString().toLowerCase().startsWith("classes") &&
 					!file.getFileName().toString().toLowerCase().startsWith("page_") &&
 					!file.getFileName().toString().toLowerCase().startsWith("view_") &&
 					file.getFileName().toString().toLowerCase() != "scripts.sql" &&
+					file.getFileName().toString().toLowerCase() != "page.nocore.xml" &&
+					file.getFileName().toString().toLowerCase() != "meta.nocore.xml" &&
 					file.getFileName().toString().toLowerCase() != "${name}.xml" }
 			.map { file ->
 				var inc = Include();
