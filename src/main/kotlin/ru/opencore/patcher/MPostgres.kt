@@ -31,6 +31,7 @@ class MPostgres : MDB {
             "    ck_id,\n" +
             "    cv_description,\n" +
             "    cl_extra,\n" +
+            "    ck_parent,\n" +
             "    ck_user,\n" +
             "    ct_change\n" +
             "from\n" +

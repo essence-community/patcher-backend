@@ -27,6 +27,7 @@ class MOracle : MDB {
             "    null as ck_id,\n" +
             "    null as cv_description,\n" +
             "    null as cl_extra,\n" +
+            "    null as ck_parent,\n" +
             "    null as ck_user,\n" +
             "    null as ct_change\n" +
             "from dual where rownum = 0\n"

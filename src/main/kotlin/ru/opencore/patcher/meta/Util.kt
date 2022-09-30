@@ -56,7 +56,8 @@ fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 						rs.getString(2),
 						rs.getInt(3),
 						rs.getString(4),
-						rs.getTimestamp(5)
+						rs.getString(5),
+						rs.getTimestamp(6)
 					)
 				})
 				.list()
