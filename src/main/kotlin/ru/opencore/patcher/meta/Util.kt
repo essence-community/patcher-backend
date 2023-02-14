@@ -606,10 +606,10 @@ fun createPagePatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 				if (page.crType.equals("2"))
 					listAll.add(MPageClean(page.ckId))
 
+				listAll.add(MPageAttrDelete(page.ckId))
 				listAll.add(page)
 
-				if (page.crType.equals("3")) {
-					listAll.addAll(
+				listAll.addAll(
 						handle
 							.createQuery(
 								bdQuery.sqlMPageAttr
@@ -627,7 +627,6 @@ fun createPagePatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 							})
 							.list()
 					)
-				}
 
 				listAll.addAll(
 					handle
