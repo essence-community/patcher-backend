@@ -597,7 +597,9 @@ fun createPagePatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 					rs.getString(9),
 					rs.getString(10),
 					rs.getTimestamp(11),
-					rs.getInt(12)
+					rs.getInt(12),
+					rs.getString(13),
+					rs.getInt(14)
 				)
 			})
 			.forEach { page ->

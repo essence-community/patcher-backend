@@ -161,7 +161,8 @@ class MOracle : MDB {
             "    cn_user,\n" +
             "    ct_change,\n" +
             "    cl_menu,\n" +
-            "    level as lvl\n" +
+            "    null as cv_redirect_url,\n" +
+            "    0 as cl_multi\n" +
             "from\n" +
             "    s_mt.t_page\n" +
             "start with\n" +

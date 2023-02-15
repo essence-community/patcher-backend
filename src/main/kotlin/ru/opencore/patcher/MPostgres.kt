@@ -210,6 +210,8 @@ class MPostgres : MDB {
             "    ck_user,\n" +
             "    ct_change,\n" +
             "    cl_menu,\n" +
+            "    cv_redirect_url,\n" +
+            "    cl_multi,\n" +
             "    1 as lvl\n" +
             "from\n" +
             "    s_mt.t_page\n" +
@@ -229,6 +231,8 @@ class MPostgres : MDB {
             "    p.ck_user,\n" +
             "    p.ct_change,\n" +
             "    p.cl_menu,\n" +
+            "    p.cv_redirect_url,\n" +
+            "    p.cl_multi,\n" +
             "    rp.lvl+1 as lvl\n" +
             "from\n" +
             "    s_mt.t_page p\n" +
@@ -246,7 +250,9 @@ class MPostgres : MDB {
             "    ck_view,\n" +
             "    ck_user,\n" +
             "    ct_change,\n" +
-            "    cl_menu\n" +
+            "    cl_menu,\n" +
+            "    cv_redirect_url,\n" +
+            "    cl_multi\n" +
             "from\n" +
             "    page\n" +
             "order by lvl asc, cn_order asc, cv_name asc\n"
