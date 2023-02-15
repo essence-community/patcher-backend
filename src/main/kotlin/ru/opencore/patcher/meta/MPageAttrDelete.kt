@@ -9,7 +9,7 @@ var formatMPageAttrDeleteSqlPostgres = "delete s_mt.t_page_attr " +
 data class MPageAttrDelete(@ColumnName("ck_page") val ckPage: String): Meta {
 	override fun toPostgres(): String {
 		return String.format(
-			formatMPageAttrSqlPostgres,
+			formatMPageAttrDeleteSqlPostgres,
 			getSqlStringOrNull(ckPage)
 		);
 	}

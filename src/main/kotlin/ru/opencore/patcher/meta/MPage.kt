@@ -21,7 +21,7 @@ data class MPage(
 	@ColumnName("ct_change") val ctChange: Timestamp,
 	@ColumnName("cl_menu") val clMenu: Int,
 	@ColumnName("cv_redirect_url") val cvRedirectUrl: String?,
-	@ColumnName("cl_multi") val clMulti: Int
+	@ColumnName("cl_multi") val clMulti: Int? = 0
 ): Meta {
 	override fun toPostgres(): String {
 		return String.format(
