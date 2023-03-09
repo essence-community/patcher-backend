@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
 	var options = Options();
 	options.addOption(Option.builder("h").longOpt("help").desc("Print this message!").build());
 	options.addOption(
-		Option.builder("c").longOpt("create").hasArg(true).desc("Required, create patch: class,object,page,query,syssetting,messages,modules,lang,auth").argName(
+		Option.builder("c").longOpt("create").hasArg(true).desc("Required, create patch: class,class_attr,object,page,query,syssetting,messages,modules,lang,auth").argName(
 			"type"
 		).build()
 	);
@@ -109,7 +109,8 @@ fun main(args: Array<String>) {
 		jdbi.installPlugin(KotlinSqlObjectPlugin())
 
 		when (cmd.getOptionValue("c")) {
-			"class" -> createClassPatch(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "meta")
+			"class" -> createClassPatch(jdbi.open(), config, bdQuery, false) && sortMeta(config.patchDir, "meta")
+			"class_attr" -> createClassPatch(jdbi.open(), config, bdQuery, true) && sortMeta(config.patchDir, "meta")
 			"query" -> createQueryPatch(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "meta")
 			"object" -> createObjectPatch(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "meta")
 			"page" -> createPagePatch(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "meta")

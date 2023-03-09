@@ -29,10 +29,10 @@ fun getSqlStringOrNull(str: String?): String {
 	return "'" + str.replace("'", "''") + "'"
 }
 
-fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
+fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB, isOnlyAttr: Boolean): Boolean {
 	var listAll = ArrayList<Meta>()
 	var nameTableModuleClass = if (bdQuery.type == DBType.ORACLE) "s_mt.t_module" else "s_mt.t_module_class"
-	if (config.ckIds.isEmpty()) {
+	if (config.ckIds.isEmpty() || isOnlyAttr) {
 		listAll.addAll(
 			handle
 				.createQuery(bdQuery.sqlMAttrType)
@@ -95,6 +95,11 @@ fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 		)
 		if (config.type == DBType.POSTGRES) {
 			writeChangePostgres(config.patchDir, "classes", listAll)
+		}
+		if (isOnlyAttr) {
+			sortXmlClasses("${config.patchDir}/classes")
+			sortXmlClassesHierarchy("${config.patchDir}/classes_hierarchy")
+			return true
 		}
 		handle
 			.createQuery(bdQuery.sqlMClass)
