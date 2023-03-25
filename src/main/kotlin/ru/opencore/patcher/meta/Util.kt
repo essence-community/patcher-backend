@@ -152,7 +152,7 @@ fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB, isOnlyAttr: B
 				.createQuery(bdQuery.sqlMClassHierarchy)
 				.define(
 					"FILTER",
-					"and ck_class_parent = :ckId or ck_class_child = :ckId"
+					"and (ck_class_parent = :ckId or ck_class_child = :ckId) and ck_class_parent not in (select mc.ck_class from $nameTableModuleClass mc) and ck_class_child not in (select mc.ck_class from $nameTableModuleClass mc)"
 				)
 				.bind("ckId", cl.ckId)
 				.map({ rs, _ ->
@@ -238,7 +238,7 @@ fun createClassPatch(handle: Handle, config: Config, bdQuery: MDB, isOnlyAttr: B
 				.createQuery(bdQuery.sqlMClassHierarchy)
 				.define(
 					"FILTER",
-					"and ck_class_parent = :ckId or ck_class_child = :ckId"
+					"and (ck_class_parent = :ckId or ck_class_child = :ckId) and ck_class_parent not in (select mc.ck_class from $nameTableModuleClass mc) and ck_class_child not in (select mc.ck_class from $nameTableModuleClass mc)"
 				)
 				.bind("ckId", cl.ckId)
 				.map({ rs, _ ->
