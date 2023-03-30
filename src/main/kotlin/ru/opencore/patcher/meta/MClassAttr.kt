@@ -5,7 +5,7 @@ import java.sql.Timestamp
 var formatMClassAttrSqlPostgres = "INSERT INTO s_mt.t_class_attr" +
 		"(ck_id, ck_class, ck_attr, cv_data_type_extra, cv_value, ck_user, ct_change, cl_required, cl_empty)" +
 		" VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) " +
-		" on conflict on constraint cin_c_class_attr_1 do update set ck_class = excluded.ck_class, ck_attr = excluded.ck_attr, cv_value = excluded.cv_value, ck_user = excluded.ck_user, ct_change = excluded.ct_change, cl_required = excluded.cl_required, cl_empty = excluded.cl_empty;"
+		" on conflict on constraint cin_c_class_attr_1 do update set ck_class = excluded.ck_class, ck_attr = excluded.ck_attr, cv_data_type_extra = excluded.cv_data_type_extra, cv_value = excluded.cv_value, ck_user = excluded.ck_user, ct_change = excluded.ct_change, cl_required = excluded.cl_required, cl_empty = excluded.cl_empty;"
 
 data class MClassAttr(
 	@ColumnName("ck_id") val ckId: String,
