@@ -10,6 +10,6 @@ class MAttrClean: Meta {
 			"select " + 
 			"ck_attr " + 
 			"from " + 
-			"s_mt.t_class_attr);";
+			"s_mt.t_class_attr) and a.ck_id not in ('defaultvalue','activerules','redirecturl','defaultvaluerule','titlerules');";
 	}
 }
