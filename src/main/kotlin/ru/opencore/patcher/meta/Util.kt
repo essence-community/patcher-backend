@@ -388,6 +388,28 @@ fun createSysSettingsPatch(handle: Handle, config: Config, bdQuery: MDB): Boolea
 	return true
 }
 
+fun createIconPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
+	var listAll = ArrayList<Meta>()
+	listAll.addAll(handle
+		.createQuery(bdQuery.sqlIcon)
+		.map({ rs, _ ->
+			MIcon(
+				rs.getString(1),
+				rs.getString(2),
+				rs.getString(3),
+				rs.getString(4),
+				rs.getTimestamp(5)
+			)
+		})
+		.list().stream()
+		.collect(Collectors.toList())
+	)
+	if (config.type == DBType.POSTGRES) {
+		writeChangePostgres(config.patchDir, "icon", listAll)
+	}
+	return true
+}
+
 fun createModulesPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 	var nameTableModuleClass = if (bdQuery.type == DBType.ORACLE) "s_mt.t_module" else "s_mt.t_module_class"
 	var nameColumnModuleClass = if (bdQuery.type == DBType.ORACLE) "ck_id" else "ck_module"

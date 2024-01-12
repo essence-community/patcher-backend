@@ -185,6 +185,17 @@ fun sortMeta(dir: String, name: String): Boolean {
 		.collect(Collectors.toList())
 	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
 		files.stream()
+			.filter { file -> file.getFileName().toString().toLowerCase() == "icon.sql" }
+			.map { file ->
+				var inc = Include();
+				inc.setFile(file.toString().replace("\\","/"));
+				inc.setRelativeToChangelogFile("true");
+				inc
+			}
+			.collect(Collectors.toList())
+	);
+	changeLog.getChangeSetOrIncludeOrIncludeAll().addAll(
+		files.stream()
 			.filter { file -> file.getFileName().toString().toLowerCase() == "classes.sql" }
 			.map { file ->
 				var inc = Include();
@@ -233,6 +244,7 @@ fun sortMeta(dir: String, name: String): Boolean {
 		files.stream()
 			.filter { file -> file.getFileName().toString().toLowerCase() != "page.xml" &&
 					!file.getFileName().toString().toLowerCase().startsWith("classes") &&
+					!file.getFileName().toString().toLowerCase().startsWith("icon") &&
 					!file.getFileName().toString().toLowerCase().startsWith("page_") &&
 					!file.getFileName().toString().toLowerCase().startsWith("view_") &&
 					file.getFileName().toString().toLowerCase() != "scripts.sql" &&

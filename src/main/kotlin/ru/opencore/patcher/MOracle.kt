@@ -450,4 +450,14 @@ class MOracle : MDB {
             "    s_at.t_role_action\n" +
             "order by\n" +
             "    ck_id asc\n"
+    override val sqlIcon =
+            "select\n" + 
+            "    ck_id,\n" + 
+            "    cv_name,\n" + 
+            "    cv_font,\n" + 
+            "    ck_user,\n" + 
+            "    ct_change\n" + 
+            "from\n" + 
+            "    s_mt.t_icon\n" + 
+            "order by cv_font asc, cv_name asc\n"
 }

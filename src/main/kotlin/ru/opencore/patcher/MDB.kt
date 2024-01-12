@@ -38,5 +38,6 @@ interface MDB {
 	val sqlDInfo: String
 	val sqlRole: String
 	val sqlAction: String
-	val sqlRoleAction: String	
+	val sqlRoleAction: String
+	val sqlIcon: String
 }

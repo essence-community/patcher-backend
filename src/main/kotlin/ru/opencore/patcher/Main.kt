@@ -11,10 +11,7 @@ import org.jdbi.v3.oracle12.OracleReturning
 import java.sql.DriverManager
 import org.jdbi.v3.postgres.PostgresPlugin
 import java.nio.file.Paths
-import ru.opencore.patcher.auth.createPatchAccount
-import ru.opencore.patcher.auth.createPatchRole
-import ru.opencore.patcher.auth.createPatchAction
-import ru.opencore.patcher.auth.createPatchDInfo
+import ru.opencore.patcher.auth.*
 
 var config = Config()
 
@@ -23,7 +20,7 @@ fun main(args: Array<String>) {
 	var options = Options();
 	options.addOption(Option.builder("h").longOpt("help").desc("Print this message!").build());
 	options.addOption(
-		Option.builder("c").longOpt("create").hasArg(true).desc("Required, create patch: class,class_attr,object,page,query,syssetting,messages,modules,lang,auth").argName(
+		Option.builder("c").longOpt("create").hasArg(true).desc("Required, create patch: class,class_attr,object,page,query,syssetting,messages,modules,lang,auth,icon").argName(
 			"type"
 		).build()
 	);
@@ -124,6 +121,7 @@ fun main(args: Array<String>) {
 				config,
 				bdQuery
 			) && createPatchRole(jdbi.open(), config, bdQuery) && createPatchAccount(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "auth")
+			"icon" -> createIconPatch(jdbi.open(), config, bdQuery) && sortMeta(config.patchDir, "meta")
 			else -> HelpFormatter().printHelp("core-patcher", options)
 		}
 	} catch (e: ParseException) {
