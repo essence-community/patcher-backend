@@ -632,8 +632,7 @@ fun createPagePatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 			.forEach { page ->
 				var listAll = ArrayList<Meta>()
 
-				if (page.crType.equals("2") || page.crType.equals("3"))
-					listAll.add(MPageClean(page.ckId))
+				listAll.add(MPageClean(page.ckId))
 
 				listAll.add(MPageAttrDelete(page.ckId))
 				listAll.add(page)
