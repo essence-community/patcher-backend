@@ -93,7 +93,9 @@ class MPostgres : MDB {
             "    cr_type,\n" +
             "    cr_access,\n" +
             "    cn_action,\n" +
-            "    cv_description\n" +
+            "    cv_description,\n" +
+            "    cr_cache,\n" +
+            "    cv_cache_key_param\n" +
             "from\n" +
             "    s_mt.t_query\n" +
             "where true\n" +
