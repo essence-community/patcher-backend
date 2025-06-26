@@ -196,8 +196,8 @@ class MPostgres : MDB {
             "    ck_user,\n" +
             "    ct_change\n" +
             "from\n" +
-            "    s_mt.t_view where 1=1 <FILTER>\n" +
-            "order by a.ck_id asc\n"
+            "    s_mt.t_view v where 1=1 <FILTER>\n" +
+            "order by v.ck_id asc\n"
     override val sqlMPage: String = "with recursive page as (\n" +
             "select\n" +
             "    ck_id,\n" +
