@@ -999,6 +999,7 @@ fun createLangPatch(handle: Handle, config: Config, bdQuery: MDB): Boolean {
 }
 
 fun writeChangePostgres(patchDir: String, name: String, rows: List<Meta>) {
+	var time = System.currentTimeMillis()
 	var file = File(patchDir + "/" + name + ".sql")
 	if (!file.getParentFile().exists()) {
 		file.getParentFile().mkdirs()
@@ -1009,8 +1010,9 @@ fun writeChangePostgres(patchDir: String, name: String, rows: List<Meta>) {
 	if (!rows.isEmpty()) {
 		writer.append(
 			String.format(
-				"--changeset patcher-core:%s dbms:postgresql runOnChange:true splitStatements:false stripComments:false\n",
-				name
+				"--changeset patcher-core:%s_%d dbms:postgresql runOnChange:true splitStatements:false stripComments:false\n",
+				name,
+				time
 			)
 		)
 	}
